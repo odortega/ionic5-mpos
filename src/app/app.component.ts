@@ -1,69 +1,77 @@
-import { Component, OnInit } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Component } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+const { SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: [
+    './side-menu/styles/side-menu.scss',
+    './side-menu/styles/side-menu.shell.scss',
+    './side-menu/styles/side-menu.responsive.scss'
+  ]
 })
-export class AppComponent implements OnInit {
-  public selectedIndex = 0;
-  public appPages = [
+export class AppComponent {
+  appPages = [
     {
-      title: 'Inbox',
-      url: '/folder/Inbox',
-      icon: 'mail'
+      title: 'Categories',
+      url: '/app/categories',
+      ionicIcon: 'list-outline'
     },
     {
-      title: 'Outbox',
-      url: '/folder/Outbox',
-      icon: 'paper-plane'
+      title: 'Profile',
+      url: '/app/user',
+      ionicIcon: 'person-outline'
     },
     {
-      title: 'Favorites',
-      url: '/folder/Favorites',
-      icon: 'heart'
+      title: 'Contact Card',
+      url: '/contact-card',
+      customIcon: './assets/custom-icons/side-menu/contact-card.svg'
     },
     {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
-    },
-    {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
+      title: 'Notifications',
+      url: '/app/notifications',
+      ionicIcon: 'notifications-outline'
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  accountPages = [
+    {
+      title: 'Log In',
+      url: '/auth/login',
+      ionicIcon: 'log-in-outline'
+    },
+    {
+      title: 'Sign Up',
+      url: '/auth/signup',
+      ionicIcon: 'person-add-outline'
+    },
+    {
+      title: 'Tutorial',
+      url: '/walkthrough',
+      ionicIcon: 'school-outline'
+    },
+    {
+      title: 'Getting Started',
+      url: '/getting-started',
+      ionicIcon: 'rocket-outline'
+    },
+    {
+      title: '404 page',
+      url: '/page-not-found',
+      ionicIcon: 'alert-circle-outline'
+    }
+  ];
 
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
+
+  constructor() {
     this.initializeApp();
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
-
-  ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+  async initializeApp() {
+    try {
+     await SplashScreen.hide();
+    } catch (err) {
+     console.log('This is normal in a browser', err);
     }
   }
 }

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">mpos</string>
+    <string name="title_activity_main">mpos</string>
+    <string name="package_name">co.moogo.mpos</string>
+    <string name="custom_url_scheme">co.moogo.mpos</string>
+</resources>
